@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1><a href="/post">Post</a></h1>
-    <h1><a href="/post">Druhy</a></h1>
-    <h1><a href="/post">Treti</a></h1>
+    <h1><a href="/post">prvy</a></h1>
+    <h1><a href="/post">druhy</a></h1>
+    <h1><a href="/post">treti</a></h1>
 </body>
 </html>
