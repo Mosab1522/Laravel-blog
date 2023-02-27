@@ -25,10 +25,17 @@ Route::get('posts/{post}', function ($slug) {
        // abort(404);
        return redirect('/');
     }
-
-    $post = file_get_contents($path);
+ // now()->addDay();..
+ // fn()=>.. namiesto function use 
+    $post = cache()->remember("posts.{$slug}", 5, function () use ($path){ 
+        var_dump('file_get_contents',);
+        return file_get_contents($path);});  
+    
 
     return view('post', [
         'post' => $post
     ]);  
-});
+})->where('post', '[A-z_\-]+');
+//whereAlpha('post');
+//whereAlphaNumeric('post');
+//whereNumeric('post');
