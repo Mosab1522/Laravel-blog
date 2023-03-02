@@ -4,7 +4,8 @@
 <body>
     <h1>Post</h1>
 <article>
-    <?= $post; ?>
+    <h1><?= $post->title; ?></h1>
+    <p><?= $post->body;?> </p>
 </article>
 <a href="/">Back</a>"
 </body>

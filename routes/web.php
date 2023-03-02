@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,27 +16,50 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+  //  $files = File::files(resource_path("posts"));
+    /* $posts=[];
+
+    foreach( $files as $file ){
+        $document = YamlFrontMatter::parseFile($file);
+        $posts[] = new Post(
+            $document->title,
+            $document->excerpt,
+            $document->date,
+            $document->body(),
+            $document->slug
+        );
+    }
+    $posts = array_map(function ($file) {
+        $document = YamlFrontMatter::parseFile($file);
+
+        return new Post(
+            $document->title,
+            $document->excerpt,
+            $document->date,
+            $document->body(),
+            $document->slug
+        );
+    }, $files);*/
+
+   // $posts = Post::all();
+
+    return view('posts', ['posts' => Post::all()]);
+    /*$posts= Post::all();
+  // ddd($posts);
+   return view('posts', ['posts' => $posts]);*/
 });
 
-Route::get('posts/{post}', function ($slug) { 
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+Route::get('posts/{post}', function ($slug) {
+    // Najst post pomocou slug a dat to do view post
 
+    $post = Post::find($slug);
 
-    if(!file_exists($path)){
-       // abort(404);
-       return redirect('/');
-    }
- // now()->addDay();..
- // fn()=>.. namiesto function use 
-    $post = cache()->remember("posts.{$slug}", 5, function () use ($path){ 
-        var_dump('file_get_contents',);
-        return file_get_contents($path);});  
-    
+    return view('post', ['post' => $post]);
+    /*
 
     return view('post', [
         'post' => $post
-    ]);  
+    ]);  */
 })->where('post', '[A-z_\-]+');
 //whereAlpha('post');
 //whereAlphaNumeric('post');

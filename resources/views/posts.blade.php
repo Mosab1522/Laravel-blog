@@ -7,8 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1><a href="/post">prvy</a></h1>
-    <h1><a href="/post">druhy</a></h1>
-    <h1><a href="/post">treti</a></h1>
+    <?php foreach ($posts as $post): ?>
+    <article>
+        <h1><a href="/posts/<?= $post->slug; ?>"><?=$post->title;?></a></h1>
+        <div>
+        <?= $post->body; ?>
+    </div>
+    </article>
+    <?php endforeach; ?> 
 </body>
 </html>
