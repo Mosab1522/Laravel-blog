@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <?php foreach ($posts as $post): ?>
-    <article>
-        <h1><a href="/posts/<?= $post->slug; ?>"><?=$post->title;?></a></h1>
+<!-- @ extends('layout')-->
+
+<x-layout_blade> <!-- == bez medzery   @ section('content')-->
+
+
+
+    <!-- < ?php foreach ($posts as $post): ?>-->
+    @foreach ($posts as $post)
+        <article class ="{{$loop->first ? 'foobar' : ''}}">
+        <h1>
+            <a href="/posts/<?= $post->slug ?>">
+                <?= $post->title ?>   
+                <!--< ?php echo $post->title?> medzera medzi < a ? kvoli komentu
+                {$post->title}} dvojite {} musia byt
+                -->
+            </a>
+        </h1>
+        <p>
+            <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
+        </p>
         <div>
-        <?= $post->body; ?>
-    </div>
+            <?= $post->body ?>
+        </div>
     </article>
-    <?php endforeach; ?> 
-</body>
-</html>
+    @endforeach
+
+</x-layout_blade> <!-- == bez medzery  @ endsection -->
+   
+    
+     <!-- < ?php endforeach; ?>-->
+

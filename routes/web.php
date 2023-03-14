@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
@@ -16,6 +18,9 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 */
 
 Route::get('/', function () {
+    /*DB::listen(function($query){
+        logger($query->sql);        kuknut kolko query sa vykonalo 
+    });*/
   //  $files = File::files(resource_path("posts"));
     /* $posts=[];
 
@@ -43,16 +48,15 @@ Route::get('/', function () {
 
    // $posts = Post::all();
 
-    return view('posts', ['posts' => Post::all()]);
+    return view('posts', ['posts' => Post::with('category')->get()]);
     /*$posts= Post::all();
   // ddd($posts);
    return view('posts', ['posts' => $posts]);*/
 });
 
-Route::get('posts/{post}', function ($slug) {
+Route::get('posts/{post:slug}', function (Post $post) {
+    // $id alebo Post $post a dole namiesto Post::findorfail - $post
     // Najst post pomocou slug a dat to do view post
-
-    $post = Post::find($slug);
 
     return view('post', ['post' => $post]);
     /*
@@ -60,7 +64,12 @@ Route::get('posts/{post}', function ($slug) {
     return view('post', [
         'post' => $post
     ]);  */
-})->where('post', '[A-z_\-]+');
+});
+
+Route::get('categories/{category:slug}', function(Category $category){
+    
+    return view('posts', ['posts' => $category->posts]);
+});
 //whereAlpha('post');
 //whereAlphaNumeric('post');
 //whereNumeric('post');
